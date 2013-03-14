@@ -1,0 +1,12 @@
+#!/bin/sh
+
+
+
+if test -z $1; then
+  VERSION=$(git describe --tags --abbrev=0 $(git rev-list --tags --max-count=1))
+else
+  VERSION=$1
+fi
+
+OPT=$2
+git log $OPT --pretty="format:  * %s" $VERSION..
