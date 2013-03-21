@@ -1,12 +1,20 @@
 #!/bin/sh
 
-
-
 if test -z $1; then
-  VERSION=$(git describe --tags --abbrev=0 $(git rev-list --tags --max-count=1))
+  COUNT=4
 else
-  VERSION=$1
+  COUNT=$[$1+1]
 fi
 
-OPT=$2
-git log $OPT --pretty="format:  * %s" $VERSION..
+echo ''
+for BRANCH in $(git for-each-ref --count=$COUNT --sort='-authordate' --format='%(refname:short)' refs/tags); do
+  if test -z $LASTBRANCH; then
+    echo "Current Changes"
+  else
+    echo $LASTBRANCH
+  fi
+  echo "------------------"
+  git log --pretty="format:  * %s" $BRANCH..$LASTBRANCH
+  echo ""
+  LASTBRANCH=$BRANCH
+done
