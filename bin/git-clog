@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if test -z $1; then
-  COUNT=4
+  COUNT=3
 else
-  COUNT=$[$1+1]
+  COUNT=$1
 fi
 
 echo ''
